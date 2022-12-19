@@ -7,14 +7,16 @@ const initialState: State = {
   firstForm: {
     firstName: "",
     lastName: "",
+    age: 0,
     email: "",
-    phoneNumber: 0,
+
     millionare: false,
     gender: "female",
     moreDetail: false,
     interests: "",
   },
   secondForm: {
+    phoneNumber: 0,
     address: "",
     address2: "",
     city: "",

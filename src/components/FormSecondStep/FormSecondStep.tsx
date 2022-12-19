@@ -25,6 +25,10 @@ const FormSecondStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>
+        Phone Number:
+        <input type="tel" {...register("phoneNumber")} />
+      </label>
+      <label>
         Address:
         <input {...register("address")} />
       </label>

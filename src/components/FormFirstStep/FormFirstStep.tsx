@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useCheckout } from "../../context/CheckoutFormContext";
 import { IFormManagerProps } from "../FormManager/IFormManagerProps";
 import { IFormFirstStep } from "./IFormFirstStep";
+import { FirstPageSchema } from "./FormFirstStepResolver";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
   const formContext = useCheckout();
@@ -14,13 +16,15 @@ const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
     formState: { errors },
   } = useForm<IFormFirstStep>({
     defaultValues: formContext.state.firstForm,
+    resolver: yupResolver(FirstPageSchema),
   });
 
   const moreDetail = watch("moreDetail");
 
   const onSubmit: SubmitHandler<IFormFirstStep> = (data) => {
-    formContext.dispatch({ type: "updateFirstForm", payload: data });
     console.log("data", data);
+    formContext.dispatch({ type: "updateFirstForm", payload: data });
+
     setActiveStep(1);
   };
 
@@ -36,12 +40,13 @@ const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
       </label>
       <label>
         Email:
-        <input {...register("email")} />
+        <input type="email" {...register("email")} />
       </label>
       <label>
-        Phone Number:
-        <input type="tel" {...register("phoneNumber")} />
+        Age:
+        <input type="number" {...register("age")} />
       </label>
+
       {/* {errors.exampleRequired && <span>This field is required</span>} */}
       <label>
         Your gender:
