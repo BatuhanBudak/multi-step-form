@@ -4,6 +4,7 @@ export const FirstPageSchema = yup.object().shape({
   firstName: yup
     .string()
     .required()
+    .matches(/^([^0-9]*)$/, "First name should not contain numbers")
     .min(3, "must be at lest 3 characters long")
     .max(15, "must be 15 characters at the most"),
   lastName: yup.string().optional(),
