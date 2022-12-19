@@ -6,13 +6,21 @@ import { IFormFirstStep } from "./IFormFirstStep";
 import { FirstPageSchema } from "./FormFirstStepResolver";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "@mui/material/Button";
-import { Box, TextField } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 
-const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
+const FormFirstStep: FC = () => {
   const formContext = useCheckout();
 
   const {
-    register,
     handleSubmit,
     watch,
     control,
@@ -27,12 +35,12 @@ const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
   const onSubmit: SubmitHandler<IFormFirstStep> = (data) => {
     console.log("data", data);
     formContext.dispatch({ type: "updateFirstForm", payload: data });
-    setActiveStep(1);
+    formContext.dispatch({ type: "setStep", payload: 1 });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box>
+      <Box paddingBottom={2}>
         <Controller
           name="firstName"
           control={control}
@@ -48,37 +56,111 @@ const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
             />
           )}
         />
-        {errors.firstName && <span>{errors.firstName.message}</span>}
       </Box>
-      <label>
-        Last Name:
-        <input {...register("lastName")} />
-      </label>
-      <label>
-        Email:
-        <input type="email" {...register("email")} />
-      </label>
-      <label>
-        Age:
-        <input type="number" {...register("age", { valueAsNumber: true })} />
-      </label>
-      {errors.age && <span>{errors.age.message}</span>}
-      <label>
-        Your gender:
-        <select {...register("gender")}>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="other">Other</option>
-        </select>
-      </label>
-      <label>More Details</label>
-      <input type="checkbox" {...register("moreDetail")} />
+      <Box paddingBottom={2}>
+        <Controller
+          name="lastName"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.lastName}
+              helperText={errors.lastName?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.email}
+              helperText={errors.email?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="age"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Age"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.age}
+              helperText={errors.age?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <FormControl fullWidth>
+          <InputLabel htmlFor="gender">Gender</InputLabel>
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                value={value}
+                onChange={onChange}
+                label="Gender"
+                labelId="gender"
+                fullWidth
+              >
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            )}
+          />
+        </FormControl>
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          control={control}
+          name="moreDetail"
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <FormControlLabel
+              label="More details"
+              control={<Checkbox checked={value} onChange={onChange} />}
+            />
+          )}
+        />
+      </Box>
       {moreDetail && (
-        <div>
-          <label>Interests</label>
-          <input type="text" {...register("interests")} />
-          {errors.interests && <span>{errors.interests.message}</span>}
-        </div>
+        <Box paddingBottom={2}>
+          <Controller
+            name="interests"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Interests"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                error={!!errors.interests}
+                helperText={errors.interests?.message ?? ""}
+              />
+            )}
+          />
+        </Box>
       )}
       <Button variant="contained" color="primary" type="submit">
         Next

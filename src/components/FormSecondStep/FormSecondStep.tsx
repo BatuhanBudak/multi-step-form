@@ -1,18 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Box, Button, Grid, TextField } from "@mui/material";
 import { FC } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCheckout } from "../../context/CheckoutFormContext";
 import { IFormManagerProps } from "../FormManager/IFormManagerProps";
 import { SecondPageSchema } from "./FormSecondStepResolver";
 import { IFormSecondStep } from "./IFormSecondStep";
 
-const FormSecondStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
+const FormSecondStep: FC = () => {
   const formContext = useCheckout();
 
   const {
-    register,
     handleSubmit,
-
+    control,
     formState: { errors },
   } = useForm<IFormSecondStep>({
     defaultValues: formContext.state.secondForm,
@@ -23,46 +23,132 @@ const FormSecondStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
     console.log("data", data);
     console.log("errors", errors);
     formContext.dispatch({ type: "updateSecondForm", payload: data });
-    setActiveStep(2);
+    formContext.dispatch({ type: "setStep", payload: 2 });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Phone Number:
-        <input type="tel" {...register("phoneNumber")} />
-      </label>
-      {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
-      <label>
-        Address:
-        <input {...register("address")} />
-      </label>
-      {errors.address && <span>{errors.address.message}</span>}
-      <label>
-        Address2:
-        <input {...register("address2")} />
-      </label>
-      {errors.address2 && <span>{errors.address2.message}</span>}
-      <label>
-        City:
-        <input {...register("city")} />
-      </label>
-      {errors.city && <span>{errors.city.message}</span>}
-      <label>
-        State:
-        <input {...register("state")} />
-      </label>
-      {errors.state && <span>{errors.state.message}</span>}
-      <label>
-        Zip:
-        <input {...register("zip")} />
-      </label>
-      {errors.zip && <span>{errors.zip.message}</span>}
-
-      <button type="button" onClick={() => setActiveStep(0)}>
-        Previous
-      </button>
-      <button type="submit">Next</button>
+      <Box paddingBottom={2}>
+        <Controller
+          name="phoneNumber"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Phone number"
+              type="tel"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Address"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.address}
+              helperText={errors.address?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="address2"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Address2"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.address2}
+              helperText={errors.address2?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="city"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="City"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.city}
+              helperText={errors.city?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="state"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="State"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.state}
+              helperText={errors.state?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Box paddingBottom={2}>
+        <Controller
+          name="zip"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Zip"
+              variant="outlined"
+              fullWidth
+              margin="dense"
+              error={!!errors.zip}
+              helperText={errors.zip?.message ?? ""}
+            />
+          )}
+        />
+      </Box>
+      <Grid container justifyContent="space-between">
+        <Grid item>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              formContext.dispatch({ type: "setStep", payload: 0 })
+            }
+          >
+            Previous
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="primary" type="submit">
+            Next
+          </Button>
+        </Grid>
+      </Grid>
     </form>
   );
 };

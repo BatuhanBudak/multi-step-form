@@ -7,7 +7,7 @@ const initialState: State = {
   firstForm: {
     firstName: "",
     lastName: "",
-    age: 0,
+    age: "",
     email: "",
 
     millionare: false,
@@ -26,6 +26,7 @@ const initialState: State = {
   thirdForm: {
     finalThoughts: "",
   },
+  activeStep: 0,
 };
 
 const CheckoutFormContext = createContext<

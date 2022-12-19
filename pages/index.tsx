@@ -6,11 +6,9 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <>
-      <main>
-        <CheckoutFormProvider>
-          <FormManager />
-        </CheckoutFormProvider>
-      </main>
+      <CheckoutFormProvider>
+        <FormManager />
+      </CheckoutFormProvider>
     </>
   );
 }

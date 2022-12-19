@@ -19,6 +19,11 @@ export const formReducer = (state: State, action: Action) => {
         ...state,
         thirdForm: action.payload,
       };
+    case "setStep":
+      return {
+        ...state,
+        activeStep: action.payload,
+      };
 
     default: {
       throw new Error(`Unhandled action type`);
