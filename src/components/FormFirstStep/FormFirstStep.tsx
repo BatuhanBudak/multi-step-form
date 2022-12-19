@@ -21,7 +21,7 @@ const FormFirstStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
   const onSubmit: SubmitHandler<IFormFirstStep> = (data) => {
     formContext.dispatch({ type: "updateFirstForm", payload: data });
     console.log("data", data);
-    setActiveStep(2);
+    setActiveStep(1);
   };
 
   return (

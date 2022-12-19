@@ -17,8 +17,9 @@ const FormSecondStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
   });
 
   const onSubmit: SubmitHandler<IFormSecondStep> = (data) => {
+    console.log("data", data);
     formContext.dispatch({ type: "updateSecondForm", payload: data });
-    setActiveStep(3);
+    setActiveStep(2);
   };
 
   return (
@@ -45,6 +46,9 @@ const FormSecondStep: FC<IFormManagerProps> = ({ setActiveStep }) => {
       </label>
       {/* {errors.exampleRequired && <span>This field is required</span>} */}
 
+      <button type="button" onClick={() => setActiveStep(0)}>
+        Previous
+      </button>
       <button type="submit">Next</button>
     </form>
   );

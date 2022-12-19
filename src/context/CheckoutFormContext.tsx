@@ -21,6 +21,9 @@ const initialState: State = {
     state: "",
     zip: "",
   },
+  thirdForm: {
+    finalThoughts: "",
+  },
 };
 
 const CheckoutFormContext = createContext<
