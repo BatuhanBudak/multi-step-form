@@ -32,7 +32,6 @@ const FormFirstStep: FC = () => {
   const moreDetail = watch("moreDetail");
 
   const onSubmit: SubmitHandler<IFormFirstStep> = (data) => {
-    console.log("data", data);
     formContext.dispatch({ type: "updateFirstForm", payload: data });
     formContext.dispatch({ type: "setStep", payload: 1 });
   };

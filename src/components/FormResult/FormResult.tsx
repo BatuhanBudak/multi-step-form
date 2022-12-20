@@ -18,11 +18,9 @@ const FormResult = () => {
 
   const entries = useMemo(() => {
     const form = Object.entries(state).filter((ele) => ele[0].includes("Form"));
-    const formFields = form.map((ele) => {
+    return form.map((ele) => {
       return Object.entries(ele[1]);
     });
-
-    return formFields;
   }, [state]);
 
   return (
