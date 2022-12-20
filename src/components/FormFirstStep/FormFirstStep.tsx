@@ -15,6 +15,7 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { TestService } from "../../test-utils/services/TestService";
 
 const FormFirstStep: FC = () => {
   const formContext = useCheckout();
@@ -31,7 +32,8 @@ const FormFirstStep: FC = () => {
 
   const moreDetail = watch("moreDetail");
 
-  const onSubmit: SubmitHandler<IFormFirstStep> = (data) => {
+  const onSubmit: SubmitHandler<IFormFirstStep> = async (data) => {
+    await TestService.testSubmit(data);
     formContext.dispatch({ type: "updateFirstForm", payload: data });
     formContext.dispatch({ type: "setStep", payload: 1 });
   };

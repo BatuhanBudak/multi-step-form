@@ -3,7 +3,7 @@ import * as yup from "yup";
 export const FirstPageSchema = yup.object().shape({
   firstName: yup
     .string()
-    .required()
+    .required("Your First Name is required")
     .matches(/^([^0-9]*)$/, "First name should not contain numbers")
     .min(3, "must be at lest 3 characters long")
     .max(15, "must be 15 characters at the most"),
@@ -13,7 +13,7 @@ export const FirstPageSchema = yup.object().shape({
     .transform((value) =>
       isNaN(value) || value === null || value === undefined ? 0 : value
     )
-    .required()
+    .required("Age is required")
     .positive()
     .integer()
     .min(18, "Must be at least 18 years old to continue"),
