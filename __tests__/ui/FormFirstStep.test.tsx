@@ -6,11 +6,12 @@ import { TestService } from "../../src/test-utils/services/TestService";
 
 jest.mock("../../src/test-utils/services/TestService");
 const mockTestService = jest.mocked(TestService);
+const user = userEvent.setup();
 
 describe("FormFirstStep", () => {
   const firstName = "batuhan";
   const age = "18";
-  const user = userEvent.setup();
+
   beforeEach(() => {
     render(<FormFirstStep />);
   });
@@ -44,14 +45,85 @@ describe("FormFirstStep", () => {
       });
     });
   });
-  test("has 2 required fields on first step", async () => {
+});
+describe("FormFirstStep fails", () => {
+  beforeEach(() => {
+    render(<FormFirstStep />);
+  });
+
+  test("with 2 required fields ", async () => {
     await user.click(getNextButton());
-    // await waitFor(() => {
-    //   expect(getFirstName()).toHaveErrorMessage("Your First Name is required");
-    // //   expect(getAge()).toHaveErrorMessage("Age is required");
-    // });
-    expect(getFirstName()).toHaveErrorMessage("Your First Name is required");
-    expect(getAge()).toHaveErrorMessage("Age is required");
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Your First Name is required/i)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Must be at least 18 years old to continue/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if first name is not provided", async () => {
+    await user.type(getAge(), "18");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Your First Name is required/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if age is not provided", async () => {
+    await user.type(getFirstName(), "longmont");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be at least 18 years old to continue/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if first name has numbers in it", async () => {
+    await user.type(getFirstName(), "1221longmont");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/First name should not contain numbers/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if first name is too short", async () => {
+    await user.type(getFirstName(), "on");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/must be at lest 3 characters long/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if first name is too long", async () => {
+    await user.type(getFirstName(), "longmontlongmontlongmontlongmont");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be 15 characters at the most/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if age is not provided", async () => {
+    await user.type(getFirstName(), "longmont");
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be at least 18 years old to continue/i)
+      ).toBeInTheDocument();
+    });
+  });
+  test("if more details is checked but interests is not provided", async () => {
+    await user.click(screen.getByRole("checkbox", { name: /more details/i }));
+    await user.click(getNextButton());
+    await waitFor(() => {
+      expect(
+        screen.getByText(/This field is required if more details is checked/i)
+      ).toBeInTheDocument();
+    });
   });
 });
 

@@ -5,8 +5,8 @@ export const FirstPageSchema = yup.object().shape({
     .string()
     .required("Your First Name is required")
     .matches(/^([^0-9]*)$/, "First name should not contain numbers")
-    .min(3, "must be at lest 3 characters long")
-    .max(15, "must be 15 characters at the most"),
+    .min(3, "Must be at lest 3 characters long")
+    .max(15, "Must be 15 characters at the most"),
   lastName: yup.string().optional(),
   age: yup
     .number()
@@ -24,7 +24,7 @@ export const FirstPageSchema = yup.object().shape({
     is: true,
     then: yup
       .string()
-      .required("Since you checked more details this field is required")
+      .required("This field is required if more details is checked")
       .min(10, "Please enter at least 10 characters"),
   }),
 });
