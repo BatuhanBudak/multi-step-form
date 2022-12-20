@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { useCheckout } from "../../context/CheckoutFormContext";
-import { IFormManagerProps } from "../FormManager/IFormManagerProps";
 import { IFormFirstStep } from "./IFormFirstStep";
 import { FirstPageSchema } from "./FormFirstStepResolver";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -3,7 +3,6 @@ import { Box, Button, Grid, TextField } from "@mui/material";
 import { FC } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCheckout } from "../../context/CheckoutFormContext";
-import { IFormManagerProps } from "../FormManager/IFormManagerProps";
 import { SecondPageSchema } from "./FormSecondStepResolver";
 import { IFormSecondStep } from "./IFormSecondStep";
 
@@ -20,8 +19,6 @@ const FormSecondStep: FC = () => {
   });
 
   const onSubmit: SubmitHandler<IFormSecondStep> = (data) => {
-    console.log("data", data);
-    console.log("errors", errors);
     formContext.dispatch({ type: "updateSecondForm", payload: data });
     formContext.dispatch({ type: "setStep", payload: 2 });
   };

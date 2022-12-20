@@ -9,7 +9,6 @@ const initialState: State = {
     lastName: "",
     age: "",
     email: "",
-
     millionare: false,
     gender: "female",
     moreDetail: false,

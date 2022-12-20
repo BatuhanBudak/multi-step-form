@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { FC } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCheckout } from "../../context/CheckoutFormContext";
-import { IFormManagerProps } from "../FormManager/IFormManagerProps";
 import { ThirdPageSchema } from "./FormThirdStepResolver";
 import { IFormThirdStep } from "./IFormThirdStep";
 import Button from "@mui/material/Button";
